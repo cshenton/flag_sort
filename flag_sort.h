@@ -26,7 +26,7 @@ void flag_sort_u32(void *array, size_t count, size_t stride, size_t offset);
 #include <stdint.h>
 
 // Performs the distribute step on the provided array, writing offsets
-void _flag_sort_distribute_u32(uint8_t *byte_array, size_t count, size_t stride, size_t offset, size_t depth, size_t offsets[257])
+static void flag_sort__distribute_u32(uint8_t *byte_array, size_t count, size_t stride, size_t offset, size_t depth, size_t offsets[257])
 {
     // Initialise a temp array of counts to zero
     size_t counts[256] = {0};
@@ -94,7 +94,7 @@ void flag_sort_u32(void *array, size_t count, size_t stride, size_t offset)
     }
 
     // Perform a distribute step on the top level array to get our first layer
-    _flag_sort_distribute_u32(byte_array, count, stride, offset, 0, offsets[0]);
+    flag_sort__distribute_u32(byte_array, count, stride, offset, 0, offsets[0]);
 
     for (size_t i = 0; i < 256; i++)
     {
@@ -107,7 +107,7 @@ void flag_sort_u32(void *array, size_t count, size_t stride, size_t offset)
             continue;
         }
 
-        _flag_sort_distribute_u32(bytes_i, count_i, stride, offset, 1, offsets[1]);
+        flag_sort__distribute_u32(bytes_i, count_i, stride, offset, 1, offsets[1]);
 
         for (size_t j = 0; j < 256; j++)
         {
@@ -120,7 +120,7 @@ void flag_sort_u32(void *array, size_t count, size_t stride, size_t offset)
                 continue;
             }
 
-            _flag_sort_distribute_u32(bytes_j, count_j, stride, offset, 2, offsets[2]);
+            flag_sort__distribute_u32(bytes_j, count_j, stride, offset, 2, offsets[2]);
 
             for (size_t k = 0; k < 256; k++)
             {
@@ -133,7 +133,7 @@ void flag_sort_u32(void *array, size_t count, size_t stride, size_t offset)
                     continue;
                 }
 
-                _flag_sort_distribute_u32(bytes_k, count_k, stride, offset, 3, offsets[3]);
+                flag_sort__distribute_u32(bytes_k, count_k, stride, offset, 3, offsets[3]);
             }
         }
     }
