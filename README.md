@@ -38,12 +38,12 @@ typedef struct entry_t
 } entry_t;
 ```
 
-And I wanted to sort an array of `entry_t` on the key field, I would write:
+And I wanted to sort an array of 1000 `entry_t` on the key field, I would write:
 
 ```c
-size_t entry_count;
+size_t entry_count = 1000;
 entry_t *entries = (entry_t *)malloc(entry_count * sizeof(entry_t));
-// Fill in the data
+// Check for allocation failures, then Fill in the data
 
 flag_sort(entries, entry_count, sizeof(entry_t), offsetof(entry_t, key));
 ```
