@@ -15,12 +15,12 @@ typedef struct entry_t
 
 int main()
 {
-    size_t count = 1000000;
-    uint32_t seed = 42;
+    const size_t count = 1000000;
+    const uint32_t seed = 42;
     srand(seed);
 
     // Allocate space for the array
-    entry_t *entries = (entry_t *)malloc(count * sizeof(entry_t));
+    entry_t *entries = malloc(sizeof(*entries) * count);
     if (!entries)
     {
         printf("Out of Memory\n");
